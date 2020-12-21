@@ -1,7 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 
 const dbConnectionUrl = process.env.DB_CONNECTION;
-console.log(process.env.DB_CONNECTION)
 
 function initialize(
     dbName,
@@ -9,7 +8,7 @@ function initialize(
     successCallback,
     failureCallback
 ) {
-    MongoClient.connect(dbConnectionUrl, function(err, dbInstance) {
+    MongoClient.connect(dbConnectionUrl, { useUnifiedTopology: true }, function(err, dbInstance) {
         if (err) {
             console.log(`[MongoDB connection] ERROR: ${err}`);
             failureCallback(err); // this should be "caught" by the calling function
