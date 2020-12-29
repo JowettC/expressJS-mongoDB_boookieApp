@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-
 const mongoose = require("mongoose");
 const bp = require('body-parser')
 require("dotenv/config");
@@ -16,7 +15,6 @@ app.use(express.json());
 // routes
 app.get("/", (req, res) => {
   res.send("1st route");
-  console.log(process.env.DB_CONNECTION)
 });
 
 
