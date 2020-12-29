@@ -5,7 +5,7 @@ const bp = require('body-parser')
 
 router.use(bp.json());
 router.get("/", (req, res) => {
-    res.send("1st route");
+    res.send("getting books");
   });
 
 router.post("/", (req, res) => {
