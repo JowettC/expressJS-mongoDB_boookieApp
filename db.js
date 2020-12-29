@@ -1,7 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 
 const dbConnectionUrl = process.env.DB_CONNECTION;
-
 function initialize(
     dbName,
     dbCollectionName,
