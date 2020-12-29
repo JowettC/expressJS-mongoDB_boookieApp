@@ -2,11 +2,32 @@ const express = require("express");
 const router = express.Router();
 const Post = require('../models/Post')
 const bp = require('body-parser')
+// Database setup
+const db = require("../db");
+const dbName = "Boookie";
+const collectionName = "books";
+
 
 router.use(bp.json());
-router.get("/", (req, res) => {
-    res.send("getting books");
+
+db.initialize(dbName, collectionName, function(dbCollection) { // successCallback
+  // get all items
+  router.get("/", (req, res) => {
+    dbCollection.find().toArray(function(err, result) {
+      if (err) throw err;
+        res.send(result);
   });
+  });
+  
+
+  // << db CRUD routes >>
+
+}, function(err) { // failureCallback
+  throw (err);
+});
+// router.get("/", (req, res) => {
+//     res.send("getting books");
+//   });
 
 router.post("/", (req, res) => {
   const post = new Post({
