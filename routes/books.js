@@ -17,6 +17,7 @@ db.initialize(dbName, collectionName, function(dbCollection) { // successCallbac
       if (err) throw err;
         res.send(result);
   });
+  
   });
   
 
