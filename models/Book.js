@@ -5,13 +5,13 @@ const BookSchema = mongoose.Schema({
         type: String,
         required:true
     },
-    description:{
+    author:{
         type: String,
         required:true
     },
     date:{
-        type: Date,
-        Default:Date.now
+        type: String,
+        required:true
     },
     username:{
         type: String,
