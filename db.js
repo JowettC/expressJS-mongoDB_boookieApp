@@ -1,26 +1,21 @@
-const MongoClient = require("mongodb").MongoClient;
+//FILENAME : db.js
 
-const dbConnectionUrl = process.env.DB_CONNECTION;
-function initialize(
-    dbName,
-    dbCollectionName,
-    successCallback,
-    failureCallback
-) {
-    MongoClient.connect(dbConnectionUrl, { useUnifiedTopology: true }, function(err, dbInstance) {
-        if (err) {
-            console.log(`[MongoDB connection] ERROR: ${err}`);
-            failureCallback(err); // this should be "caught" by the calling function
-        } else {
-            const dbObject = dbInstance.db(dbName);
-            const dbCollection = dbObject.collection(dbCollectionName);
-            console.log("[MongoDB connection] SUCCESS");
+const mongoose = require("mongoose");
 
-            successCallback(dbCollection);
-        }
+// Replace this with your MONGOURI.
+const MONGOURI = process.env.DB_CONNECTION;
+
+const InitiateMongoServer = async () => {
+  try {
+    await mongoose.connect(MONGOURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-}
-
-module.exports = {
-    initialize
+    console.log("Connected to DB");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
 };
+
+module.exports = InitiateMongoServer;
