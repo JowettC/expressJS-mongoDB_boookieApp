@@ -22,29 +22,8 @@ app.get("/", (req, res) => {
 });
 
 // << db setup >>
-const db = require("./db");
-const dbName = "Boookie";
-const collectionName = "user";
-
-// db init
-db.initialize(
-  dbName,
-  collectionName,
-  function (dbCollection) {
-    // successCallback
-    // get all items
-    dbCollection.find().toArray(function (err, result) {
-      if (err) throw err;
-      console.log(result);
-    });
-
-    // << db CRUD routes >>
-  },
-  function (err) {
-    // failureCallback
-    throw err;
-  }
-);
+const InitiateMongoServer = require("./db");
+InitiateMongoServer();
 
 const port = 3000;
 app.listen(port, () => {
