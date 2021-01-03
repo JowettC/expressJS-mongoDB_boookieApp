@@ -14,8 +14,9 @@ const collectionName = "books";
 
 router.use(bp.json());
 
+
 router.get("/", auth.authenticateToken, async (req, res) => {
-  console.log(req.user.name)
+  // console.log(req.user.name)
     let books = await Book.find({
       username: req.user.name
     })
@@ -39,6 +40,11 @@ router.post("/", auth.authenticateToken, async (req, res) => {
     .catch(err =>{
       res.send({error: true, msg:err})
     })
+});
+router.delete("/:id", auth.authenticateToken, async (req, res) => {
+    await Book.deleteOne({_id: req.params.id})
+    console.log(req.params.id)
+    res.send({error: false, _id:req.params.id, message:"Successfully Deleted"})
 });
 
   module.exports = router;
