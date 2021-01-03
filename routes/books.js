@@ -23,7 +23,7 @@ router.get("/", auth.authenticateToken, async (req, res) => {
 });
 
 router.post("/", auth.authenticateToken, async (req, res) => {
-  console.log(req.body.date)
+  // console.log(req.body.date)
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
