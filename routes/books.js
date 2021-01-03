@@ -1,51 +1,43 @@
 const express = require("express");
 const router = express.Router();
-const Post = require('../models/Post')
+const Post = require('../models/Book')
 const bp = require('body-parser')
+const auth = require("../auth/auth");
+require("dotenv").config();
+const Book = require("../models/Book");
+var dayjs = require('dayjs')
 // Database setup
-const db = require("../db");
+// const db = require("../db");
 const dbName = "Boookie";
 const collectionName = "books";
 
 
 router.use(bp.json());
 
-db.initialize(dbName, collectionName, function(dbCollection) { // successCallback
-  // get all items
-  
-  router.get("/", (req, res) => {
-    console.log("getting Books")
-    dbCollection.find().toArray(function(err, result) {
-      if (err) throw err;
-        res.send(result);
-  });
-  
-  });
-  
-
-  // << db CRUD routes >>
-
-}, function(err) { // failureCallback
-  throw (err);
+router.get("/", auth.authenticateToken, async (req, res) => {
+  console.log(req.user.name)
+    let books = await Book.find({
+      username: req.user.name
+    })
+    res.send({error: false, data:books})
 });
-// router.get("/", (req, res) => {
-//     res.send("getting books");
-//   });
 
-router.post("/", (req, res) => {
-  const post = new Post({
+router.post("/", auth.authenticateToken, async (req, res) => {
+  console.log(req.body.date)
+  const book = new Book({
     title: req.body.title,
     author: req.body.author,
-    date: Date.now()
+    date: req.body.date,
+    username: req.user.name
   });
 
-    post.save()
+    book.save()
     .then( data => {
       // res.send({error:"false", data:data, msg:"created"});
-      res.json(data);
+      res.send({error: false, data:data, msg:"Successfully Created"})
     })
     .catch(err =>{
-      res.send({error:"true", data:data, msg:"unable to create"})
+      res.send({error: true, msg:err})
     })
 });
 
