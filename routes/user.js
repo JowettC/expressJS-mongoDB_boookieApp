@@ -5,17 +5,16 @@ const bp = require('body-parser')
 // Database setup
 const db = require("../db");
 const dbName = "Boookie";
-const collectionName = "books";
+const collectionName = "user";
 
 
 router.use(bp.json());
 
 db.initialize(dbName, collectionName, function(dbCollection) { // successCallback
   // get all items
-  
   router.get("/", (req, res) => {
-    console.log("getting Books")
-    dbCollection.find().toArray(function(err, result) {
+      console.log(collectionName)
+    dbCollection.find(collectionName).toArray(function(err, result) {
       if (err) throw err;
         res.send(result);
   });
