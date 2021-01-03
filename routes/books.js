@@ -43,7 +43,7 @@ router.post("/", auth.authenticateToken, async (req, res) => {
 });
 router.delete("/:id", auth.authenticateToken, async (req, res) => {
     await Book.deleteOne({_id: req.params.id})
-    console.log(req.params.id)
+    // console.log(req.params.id)
     res.send({error: false, _id:req.params.id, message:"Successfully Deleted"})
 });
 
