@@ -17,6 +17,9 @@ router.post("/register", async (req, res) => {
   if (existinguser) {
     return res.send({ error: true, message: "Username Exist" });
   }
+  if (req.body.password =="" || req.body.username ==""){
+    return res.send({ error: true, message: "Fields must not be empty" });
+  }
 
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const username = req.body.username;
